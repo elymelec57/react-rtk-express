@@ -9,6 +9,7 @@ var fileUpload = require("express-fileupload");
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var RouterEmployes = require('./routes/employes');
+var adminRouter = require('./routes/admin');
 
 var app = express();
 const keys = require('./settings/keys');
@@ -23,6 +24,10 @@ app.use(session({
 
 app.set('key', keys.key)
 // view engine setup
+
+const hbs = require('hbs');
+hbs.registerPartials(__dirname + '/views/partials', function (err) {});
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
@@ -41,9 +46,11 @@ app.use("/public",express.static('public'));
 // esta linea es para los archivos estaticos en el servidor
 app.use(express.static(path.join(__dirname, 'public')));
 
+// rutas del sistema y de las api
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/employes/', RouterEmployes);
+app.use('/', adminRouter);
 
 app.use(fileUpload());
 // catch 404 and forward to error handler

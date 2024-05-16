@@ -10,7 +10,7 @@ router.post('/logout', userCtrl.logout);
 router.post('/register', userCtrl.register);
 router.post('/verify', userCtrl.verify);
 
-router.get('/profile', validateToken, userCtrl.profile);
+//router.get('/profile', validateToken, userCtrl.profile);
 router.put('/edit/profile', validateToken, userCtrl.editProfile);
 // router.get('/', function(req, res, next) {
 //   res.send('respond with a resource');
