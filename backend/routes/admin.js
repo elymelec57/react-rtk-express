@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
+
 const { validateTokenAdmin } = require('../middlewares/validateTokenAdmin');
 const adminController = require('../controllers/admin.controller');
+
 const user = require('../models').User;
 const employes = require('../models').Employe;
 
@@ -30,5 +32,7 @@ router.get('/user/edit/:id', validateTokenAdmin, adminController.EditUser);
 router.get('/employe/edit/:id', validateTokenAdmin, adminController.editEmploye);
 
 router.post('/user/update', validateTokenAdmin, adminController.updateUser);
+
+router.post('/employe/update', validateTokenAdmin, adminController.updateEmploye);
 
 module.exports = router;

@@ -157,6 +157,27 @@ async function updateUser(req,res){
     res.redirect('/usuarios');
 }
 
+async function updateEmploye(req,res){
+    let data = {
+        name: req.body.name, 
+        last_name: req.body.last_name, 
+        job: req.body.job, 
+        phone: req.body.phone, 
+        address: req.body.address, 
+        age: req.body.age,
+    }
+
+    Employes.update(data,{
+        where: { id: req.body.id}
+    }).
+        then((data)=>{
+            res.redirect('/empleados');
+        })
+        .catch((error)=>{
+            res.json({e:error})
+        })
+}
+
 async function getEmployes(req,res){
     const { admin } = req.cookies;
     let empleados = await Employes.findAll();
@@ -176,5 +197,6 @@ module.exports = {
     EditUser,
     updateUser,
     deleteEmployes,
-    editEmploye
+    editEmploye,
+    updateEmploye
 }

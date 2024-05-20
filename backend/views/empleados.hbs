@@ -28,11 +28,10 @@
       <td>{{rol }}</td>
       <td class="text-center">
           <button class="btn btn-danger" onclick="modaldelete({{id}})">Delete</button>
-          {{!-- <button class="btn btn-success" onclick="modaldelete({{id}})">Edit</button> --}}
-          <!-- Button trigger modal -->
           <button type="button" class="btn btn-primary" onclick="modalEdit({{id}})" data-toggle="modal" data-target="#exampleModal">
             Edit
           </button>
+          <button type="button" class="btn bg-success text-white" onclick="verphoto(`{{photo}}`)">foto</button>
       </td>
     </tr>
     {{/each}}
@@ -41,7 +40,7 @@
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <form action="/user/update" method="post">
+    <form action="/employe/update" method="post">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Edit Employes</h5>
@@ -54,35 +53,33 @@
             <div class="col-lg-6">
                 <input type="hidden" id="id" name="id">
                 <label for="">Name</label>
-                <input type="text" class="form-controller" id="nameE" name="nameE">
+                <input type="text" class="form-controller" id="name" name="name">
             </div>
             <div class="col-lg-6">
                 <label for="">Last Name</label>
-                <input type="text" class="form-controller" id="lastNameE" name="lastNameE">
+                <input type="text" class="form-controller" id="last_nameE" name="last_name">
             </div>
           </div>
 
           <div class="row">
             <div class="col-lg-6">
-                <input type="hidden" id="id" name="id">
                 <label for="">Profession</label>
                 <input type="text" class="form-controller" id="job" name="job">
             </div>
             <div class="col-lg-6">
                 <label for="">Phone</label>
-                <input type="text" class="form-controller" id="phoneE" name="phoneE">
+                <input type="text" class="form-controller" id="phone" name="phone">
             </div>
           </div>
 
           <div class="row">
             <div class="col-lg-6">
-                <input type="hidden" id="id" name="id">
                 <label for="">Email</label>
-                <input type="text" class="form-controller" id="emailE" name="emailE">
+                <input type="text" class="form-controller" id="address" name="address">
             </div>
             <div class="col-lg-6">
                 <label for="">Age</label>
-                <input type="text" class="form-controller" id="ageE" name="ageE">
+                <input type="text" class="form-controller" id="age" name="age">
             </div>
           </div>
       </div>
@@ -99,7 +96,6 @@
 
 <script>
     function modaldelete(id){
-       
         Swal.fire({
             title: "Estas seguro(a)?",
             text: "No podra revertir esta accion",
@@ -115,15 +111,24 @@
         })
     }
 
+    function verphoto(photo){
+        Swal.fire({
+            imageUrl: `http://localhost:6001/public/images/${photo}`,
+            imageWidth: 400,
+            imageHeight: 200,
+            imageAlt: 'Custom image',
+          })
+    }
+
     async function modalEdit(id){
-      const usuario = await fetch(`http://localhost:6001/employe/edit/${id}`);
-      const user = await usuario.json();
-      $('#nameE').val(user.e.name);
-      $('#lastNameE').val(user.e.last_name);
-      $('#job').val(user.e.job);
-      $('#phoneE').val(user.e.phone);
-      $('#emailE').val(user.e.address);
-      $('#ageE').val(user.e.age);
-      $('#id').val(user.e.id);
+      const data = await fetch(`http://localhost:6001/employe/edit/${id}`);
+      const employe = await data.json();
+      $('#name').val(employe.e.name);
+      $('#last_nameE').val(employe.e.last_name);
+      $('#job').val(employe.e.job);
+      $('#phone').val(employe.e.phone);
+      $('#address').val(employe.e.address);
+      $('#age').val(employe.e.age);
+      $('#id').val(employe.e.id);
     }
 </script>
